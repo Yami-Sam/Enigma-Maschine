@@ -169,7 +169,7 @@ def main():
             print("Nå vil progammet ta et plaintekst fra ukryptert.txt og kryptere den med en nøkkel du velger")
             
             message = f.read()
-            keyword = input("Skriv in hva nøkkel du ønsker")
+            keyword = input("Skriv in hva nøkkel du ønsker:")
 
             encrypted = vigenere_decode(message, keyword) 
             print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + encrypted)

@@ -141,63 +141,66 @@ def vigenere_decode(msg, key):
 #post-condition : behandler input med funksjoner
 #################################################       
 def main():
-    while True:
-        # input fra bruker
-        maximize_console() #fremkaller funksjon til å maksimere viduet
-        choice = startInterface() #starter consoll ui og tar i mot verdier fra meny til main
+    maximize_console() #fremkaller funksjon til å maksimere viduet
+    # input fra bruker
+    choice = startInterface() #starter consoll ui og tar i mot verdier fra meny til main
 
-        if choice == "1":
-            message = input("Hva vil du encryptere?") 
-            keyword = input('Hva skal enkrypterings nøkkelen være?')
+    if choice == "1":
+        message = input("Hva vil du encryptere?") 
+        keyword = input('Hva skal enkrypterings nøkkelen være?')
 
-            encrypted = vigenere_encode(message, keyword) 
-            print("Etter enkryptering av " + message + " og nøkkelen " + keyword + " blir teksten til " + encrypted)
-            time.sleep(3)
+        encrypted = vigenere_encode(message, keyword) 
+        print("Etter enkryptering av " + message + " og nøkkelen " + keyword + " blir teksten til " + encrypted)
+        time.sleep(3)
 
-        elif choice == "2":
-            message = input("Hva vil du decryptere?") 
-            keyword = input('Hva skal enkrypterings nøkkelen være?')
+    elif choice == "2":
+        message = input("Hva vil du decryptere?") 
+        keyword = input('Hva skal enkrypterings nøkkelen være?')
 
-            unencrypted = vigenere_decode(message, keyword) 
-            print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + unencrypted)
-            time.sleep(3)
+        unencrypted = vigenere_decode(message, keyword) 
+        print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + unencrypted)
+        time.sleep(3)
 
-        elif choice == "3":
-            f = open('ukryptert.txt', 'r')
-            s = open('kryptert.txt' , 'w')
-            
-            print("Nå vil progammet ta et plaintekst fra ukryptert.txt og kryptere den med en nøkkel du velger")
-            
-            message = f.read()
-            keyword = input("Skriv in hva nøkkel du ønsker:")
-
-            encrypted = vigenere_decode(message, keyword) 
-            print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + encrypted)
-            s.write(encrypted)
-            s.close()
-            f.close()
-            time.sleep(3)
-
-        elif choice == "4":
-            print("Prorgammet termineres. Hade godt!.")
-            time.sleep(3)
-            exit()
+    elif choice == "3":
+        f = open('ukryptert.txt', 'r')
+        s = open('kryptert.txt' , 'w')
         
+        print("Nå vil progammet ta et plaintekst fra ukryptert.txt og kryptere den med en nøkkel du velger")
+        
+        message = f.read()
+        keyword = input("Skriv in hva nøkkel du ønsker:")
+
+        encrypted = vigenere_decode(message, keyword) 
+        print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + encrypted)
+        s.write(encrypted)
+        s.close()
+        f.close()
+        time.sleep(3)
+
+    elif choice == "4":
+        print("Prorgammet termineres. Hade godt!.")
+        time.sleep(3)
+        exit()
+    
+    else:
+        print("Feilmelding. Skriv in Enten 1 eller 2 ")
+        time.sleep(2)
+        main()
+
+    while True:
+        #her er loopen som skal spørre om bruker å restarte eller ikke
+        restart = str(input("Vil du starte programmet på nytt?")).lower()
+
+        if restart == "yes" or restart == "y" or restart == 'ja' or restart == 'j':
+            main() # restarter programmet
+
+        elif restart == "n" or restart == "no" or restart == 'nei':
+            print ("Prorgammet termineres. Hade godt!.")
+            time.sleep(3)
+            exit() #lukker programmet
+            
         else:
-            print("Feilmelding. Skriv in Enten 1 eller 2 ")
-            time.sleep(2)
-            main()
-        while True:
-            #her er loopen som skal spørre om bruker å restarte eller ikke
-            restart = str(input("Vil du starte programmet på nytt?")).lower()
-            if restart == "yes" or restart == "y" or restart == 'ja' or restart == 'j':
-                main() # restarter programmet
-            elif restart == "n" or restart == "no" or restart == 'nei':
-                print ("Prorgammet termineres. Hade godt!.")
-                time.sleep(3)
-                exit() #lukker programmet
-            else:
-                print('Feilmelding. Ja eller nei?')
+            print('Feilmelding. Ja eller nei?')
 
 #################################################
 #main() : main() starter programmet

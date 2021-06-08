@@ -46,9 +46,6 @@ def maximize_console(lines=None):
         user32.ShowWindow(hWnd, SW_MAXIMIZE)
 
 
-alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?-_;:+1234567890"|§+\!#¤%&/()=`*^¨<> ' #Alphabetet som blir brukes i enkypteringen
-
-
 #################################################
 #clear          : Denne funksjonen gjør konsollen klar ved å slette det gammel info
 #Etter-Bruk     : Sletter alt på konsollen
@@ -96,44 +93,42 @@ ____    ____  __    _______  _______ .__   __.  _______ .______       _______   
         return choice
 
 
-def vigenere_encode(msg, key):
-    #Funksjon som enkode en string med Vigenere cipher,
-    # og retunerer kryptert melding  
-    secret = '' 
-    key_length = len(key) 
-    alphabet_length = len(alphabet)
+alphabet = "abcdefghijklmnopqrstuvwxyz "
 
-    for i, char in enumerate(msg):
-        msgInt = alphabet.find(char) 
-        encInt = alphabet.find(key[i % key_length])
-
-        if msgInt == -1 or encInt == -1:
-            return ''
-
-        encoded = (msgInt + encInt) % alphabet_length 
-        secret += alphabet[encoded]
-
-    return secret
+letter_to_index = dict(zip(alphabet, range(len(alphabet))))
+index_to_letter = dict(zip(range(len(alphabet)), alphabet))
 
 
-def vigenere_decode(msg, key):
-    #Funksjon som dekoder en string med Vigenere cipher,
-    # og retunerer ukryptert melding  
-    secretnomore = '' 
-    key_length = len(key) 
-    alphabet_length = len(alphabet)
+def encrypt(message, key):
+    encrypted = ""
+    split_message = [
+        message[i : i + len(key)] for i in range(0, len(message), len(key))
+    ]
 
-    for i, char in enumerate(msg):
-        msgInt = alphabet.find(char) 
-        encInt = alphabet.find(key[i % key_length])
+    for each_split in split_message:
+        i = 0
+        for letter in each_split:
+            number = (letter_to_index[letter] + letter_to_index[key[i]]) % len(alphabet)
+            encrypted += index_to_letter[number]
+            i += 1
 
-        if msgInt == -1 or encInt == -1:
-            return print("Du har brukt ikke brukbare symboler")
+    return encrypted
 
-        encoded = (msgInt - encInt) % alphabet_length 
-        secretnomore += alphabet[encoded]
 
-    return secretnomore
+def decrypt(cipher, key):
+    decrypted = ""
+    split_encrypted = [
+        cipher[i : i + len(key)] for i in range(0, len(cipher), len(key))
+    ]
+
+    for each_split in split_encrypted:
+        i = 0
+        for letter in each_split:
+            number = (letter_to_index[letter] - letter_to_index[key[i]]) % len(alphabet)
+            decrypted += index_to_letter[number]
+            i += 1
+
+    return decrypted
 
 #################################################
 #main : main funksjonen er hoved koden som styrer programmet
@@ -149,7 +144,7 @@ def main():
         message = input("Hva vil du encryptere?") 
         keyword = input('Hva skal enkrypterings nøkkelen være?')
 
-        encrypted = vigenere_encode(message, keyword) 
+        encrypted = encrypt(message, keyword) 
         print("Etter enkryptering av " + message + " og nøkkelen " + keyword + " blir teksten til " + encrypted)
         time.sleep(3)
 
@@ -157,7 +152,7 @@ def main():
         message = input("Hva vil du decryptere?") 
         keyword = input('Hva skal enkrypterings nøkkelen være?')
 
-        unencrypted = vigenere_decode(message, keyword) 
+        unencrypted = decrypt(message, keyword) 
         print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + unencrypted)
         time.sleep(3)
 
@@ -170,7 +165,8 @@ def main():
         message = f.read()
         keyword = input("Skriv in hva nøkkel du ønsker:")
 
-        encrypted = vigenere_decode(message, keyword) 
+        encrypted = vigenere_decode(message, keyword)
+        #if encrypted != alphabet
         print("Etter dekryptering av " + message + " og nøkkelen " + keyword + " blir plainteksten " + encrypted)
         s.write(encrypted)
         s.close()

@@ -46,7 +46,7 @@ def maximize_console(lines=None):
         user32.ShowWindow(hWnd, SW_MAXIMIZE)
 
 
-alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅabcdefghijklmnopqrstuvwxyzæøå .,?-_;:+1234567890"' #Alphabetet som blir brukes i enkypteringen
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?-_;:+1234567890" ' #Alphabetet som blir brukes i enkypteringen
 
 
 #################################################
@@ -128,7 +128,7 @@ def vigenere_decode(msg, key):
         encInt = alphabet.find(key[i % key_length])
 
         if msgInt == -1 or encInt == -1:
-            return ''
+            return print("Du har brukt ikke brukbare symboler")
 
         encoded = (msgInt - encInt) % alphabet_length 
         secretnomore += alphabet[encoded]
@@ -198,7 +198,7 @@ def main():
             print ("Prorgammet termineres. Hade godt!.")
             time.sleep(3)
             exit() #lukker programmet
-            
+
         else:
             print('Feilmelding. Ja eller nei?')
 

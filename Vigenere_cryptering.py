@@ -100,18 +100,18 @@ def vigenere_encode(msg, key):
     #Funksjon som enkode en string med Vigenere cipher,
     # og retunerer kryptert melding  
     secret = '' 
-    key_length = len(key) 
-    alphabet_length = len(alphabet)
+    key_length = len(key) # antall karakter i key
+    alphabet_length = len(alphabet) #antall karakter i alphabet
 
-    for i, char in enumerate(msg):
-        msgInt = alphabet.find(char) 
-        encInt = alphabet.find(key[i % key_length])
+    for i, char in enumerate(msg): # lager indeks og legger til 0, a 1,b osv,,, lagrer tallet i i og bokstav i cahr
+        msgInt = alphabet.find(char) # leter i indeks til alphabet
+        encInt = alphabet.find(key[i % key_length])  #indeks av key og bruker modulus
 
-        if msgInt == -1 or encInt == -1:
-            return ('')
+        if msgInt == -1 or encInt == -1:  # ingen teff retuner tom -1 e hva den retunerer hvis d e ikke i indeks
+            return ''
 
-        encoded = (msgInt + encInt) % alphabet_length 
-        secret += alphabet[encoded]
+        encoded = (msgInt + encInt) % alphabet_length #legge sammen char og key tallene og modulus til å finne resten
+        secret += alphabet[encoded] # legge bokstavene i indeksen til secret 
 
     return secret
 

@@ -108,7 +108,7 @@ def vigenere_encode(msg, key):
         encInt = alphabet.find(key[i % key_length])
 
         if msgInt == -1 or encInt == -1:
-            return ''
+            return ('')
 
         encoded = (msgInt + encInt) % alphabet_length 
         secret += alphabet[encoded]
